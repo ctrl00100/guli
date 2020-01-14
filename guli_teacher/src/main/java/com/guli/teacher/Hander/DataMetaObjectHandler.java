@@ -6,18 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * @Auther: Administrator
- * @Date: 2020/1/14 11:21
- * @Description:
- */
-
-
 @Component
-public class TeacherMetaObjectHandler implements MetaObjectHandler {
+public class DataMetaObjectHandler implements MetaObjectHandler{
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setFieldValByName("isDelete",0,metaObject);
+        //自动补充teacher对象属性中的数据， isDeleted ： Boolean 所以我们应该放入true, false
+        this.setFieldValByName("isDeleted",0,metaObject);
         this.setFieldValByName("gmtCreate",new Date(),metaObject);
         this.setFieldValByName("gmtModified",new Date(),metaObject);
     }
