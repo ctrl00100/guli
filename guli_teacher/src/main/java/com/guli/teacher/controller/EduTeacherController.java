@@ -2,7 +2,9 @@ package com.guli.teacher.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.guli.common.exception.EduException;
 import com.guli.common.result.Result;
+import com.guli.common.result.ResultCode;
 import com.guli.teacher.entity.EduTeacher;
 import com.guli.teacher.entity.query.TeacherQuery;
 import com.guli.teacher.service.EduTeacherService;
@@ -10,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +40,7 @@ public class EduTeacherController {
     @ApiOperation(value = "所有讲师列表")
     @GetMapping
     public Result getTeacherList(){
+//        int a = 1 / 0;
         try {
             List<EduTeacher> list = eduTeacherService.list(null);
 //        return list;
@@ -123,14 +127,19 @@ public class EduTeacherController {
             @ApiParam(name="id",value = "讲师ID", required = true)
             @PathVariable  String id){
 
-        /* 当我们的业务被非法参数操作时、我们可以自定义异常（业务异常）
-        EduTeacher teacher = teacherService.getById(id);
+//         当我们的业务被非法参数操作时、我们可以自定义异常（业务异常）
+        EduTeacher teacher = eduTeacherService.getById(id);
         if(teacher == null){
             throw new EduException(ResultCode.EDU_ID_ERROR,"没有此讲师信息");
-        }*/
+        }
 
         try {
-            EduTeacher teacher = eduTeacherService.getById(id);
+//            EduTeacher teacher = eduTeacherService.getById(id);
+//            if (teacher == null || teacher.equals("")) {
+//                throw new EduException((ResultCode.EDU_ID_ERROR),"没有此");
+//            }
+
+
             return Result.ok().data("teacher",teacher);
         } catch (Exception e) {
             e.printStackTrace();

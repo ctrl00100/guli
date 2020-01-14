@@ -16,5 +16,11 @@ public class tt {
     Long sss = null;
         System.out.println(sss);
 
+
+    String q1 = null;
+    String q2 = "";
+    System.out.println(q1+"22"+q2);
+    System.out.println(q1==q2);
+
     }
 }
