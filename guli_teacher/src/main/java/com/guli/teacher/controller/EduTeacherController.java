@@ -29,7 +29,7 @@ import java.util.List;
 @Api(description="讲师管理")
 @RestController
 @RequestMapping("/teacher")
-//
+@CrossOrigin
 //@RestController
 //@RequestMapping("/teacher/edu-teacher")
 public class EduTeacherController {
@@ -101,6 +101,7 @@ public class EduTeacherController {
         try {
             Page<EduTeacher> teacherPage = new Page<>(page, limit);
             //Wrapper<TeacherQuery> queryWrapper = new QueryWrapper<TeacherQuery>();
+            System.out.println(query);
             eduTeacherService.pageQuery(teacherPage, query);
             return Result.ok().data("total",teacherPage.getTotal()).data("rows",teacherPage.getRecords());
         } catch (Exception e) {
