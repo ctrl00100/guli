@@ -1,9 +1,12 @@
 package com.guli.teacher.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.guli.common.result.Result;
+import com.guli.teacher.entity.vo.CourseDesc;
+import com.guli.teacher.service.EduCourseService;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -13,9 +16,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @author guli
  * @since 2020-01-20
  */
+@Api(description="teacher/edu-course")
 @RestController
-@RequestMapping("/teacher/edu-course")
+@CrossOrigin
+@RequestMapping("/course")
 public class EduCourseController {
+
+
+    @Autowired
+    private EduCourseService eduCourseService;
+
+    @PostMapping("save")
+    public Result saveCourse(@RequestBody CourseDesc courseDesc){ //接收课程和描述对象
+
+        try {
+            //接收课程和描述对象
+            String courseId = eduCourseService.saveCourseDesc(courseDesc);
+            return Result.ok().data("courseId",courseId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error();
+        }
+    }
 
 }
 

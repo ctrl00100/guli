@@ -1,7 +1,10 @@
 package com.guli.teacher.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.guli.common.exception.EduException;
 import com.guli.teacher.entity.EduSubject;
+import com.guli.teacher.entity.vo.OneSubject;
+import com.guli.teacher.entity.vo.TwoSubject;
 import com.guli.teacher.mapper.EduSubjectMapper;
 import com.guli.teacher.service.EduSubjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +13,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,6 +36,20 @@ import java.util.List;
  */
 @Service
 public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubject> implements EduSubjectService {
+
+    @Autowired
+    private EduSubjectMapper eduSubjectMapper;
+
+
+    /**
+     *
+     * 功能描述:
+     *
+     * @param: 读写文件
+     * @return:
+     * @auther: Administrator
+     * @date: 2020/1/20 14:56
+     */
     @Override
     public List<String> importExl(MultipartFile file) {
         List<String> msg = new ArrayList<>();
@@ -36,7 +57,15 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             //1、获取文件流
             InputStream inputStream = file.getInputStream();
             //2、创建workbook
-            Workbook workbook = new HSSFWorkbook(inputStream);
+            Workbook workbook = null;
+            if(StringUtils.endsWithIgnoreCase(file.getOriginalFilename(),".xls")){
+                 workbook = new HSSFWorkbook(inputStream);
+
+            }else {
+                 workbook = new XSSFWorkbook(inputStream);
+
+            }
+
             //3 根据workbook获取sheet
             Sheet sheet = workbook.getSheetAt(0);
             //获取表格最后一个索引位置也就是行数
@@ -112,6 +141,9 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         return msg;
     }
 
+
+
+
     //2 判断二级分类名称是否有相同的
     private EduSubject existTwoSubject(String name,String pid) {
         QueryWrapper<EduSubject> wrapper = new QueryWrapper<>();
@@ -120,6 +152,8 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
 
         return baseMapper.selectOne(wrapper);
     }
+
+
 
     //1 判断一级分类名称是否相同
     private EduSubject existOneSubject(String name) {
@@ -130,5 +164,69 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
         EduSubject eduSubject = baseMapper.selectOne(wrapper);
         return eduSubject;
     }
+    @Override
+    public List<OneSubject> getTree() {
+        List<OneSubject> oneSubjectList = new ArrayList<>();
+        //1、把一级分类查询出来、并查询一级分类下的二级分类
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("parent_id",0);
+        List<EduSubject> list = baseMapper.selectList(wrapper);
+        for (EduSubject subject1 : list) {
+            OneSubject os = new OneSubject();
+//            System.out.println(list);
+//            System.out.println(subject1);
+            BeanUtils.copyProperties(subject1,os);
+            System.out.println(subject1);
+            System.out.println(os);
+
+
+            //查询下级列表
+            QueryWrapper wr = new QueryWrapper();
+            wr.eq("parent_id",os.getId());
+            List<EduSubject> twoList = baseMapper.selectList(wr);
+            for (EduSubject subject2 : twoList) {
+                TwoSubject ts = new TwoSubject();
+                //复制
+                BeanUtils.copyProperties(subject2,ts);
+                os.getChildren().add(ts);
+            }
+            //添加到OneSubject集合中
+            oneSubjectList.add(os);
+        }
+
+        return oneSubjectList;
+    }
+
+    @Override
+    public boolean selectTwo(String id) {
+            List<EduSubject> a= eduSubjectMapper.findTwoByid(id);
+        System.out.println(a);
+       boolean aa= a.size() > 0;
+        return aa ;
+    }
+
+    @Override
+    public boolean saveLevelOne(EduSubject subject) {
+        //1、根据这个title判断一下一级分类是否存在
+        EduSubject subjectLevelOne = this.existOneSubject(subject.getTitle());
+        //存在直接返回false
+
+        //不存在保存到数据库并返回true
+        if(subjectLevelOne == null){
+            return super.save(subject);
+        }
+
+        return false;
+    }
+    @Override
+    public boolean saveLevelTwo(EduSubject subject) {
+        EduSubject subjectLevelTwo = this.existTwoSubject(subject.getTitle(), subject.getParentId());
+        if(subjectLevelTwo == null){
+            return this.save(subject);
+        }else{
+            throw new EduException(20001, "类别已存在");
+        }
+    }
+
 
 }

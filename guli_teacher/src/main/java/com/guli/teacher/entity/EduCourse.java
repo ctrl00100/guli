@@ -1,8 +1,12 @@
 package com.guli.teacher.entity;
 
 import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -29,6 +33,7 @@ public class EduCourse implements Serializable {
 
     @ApiModelProperty(value = "课程ID")
     @TableId(value = "id", type = IdType.ID_WORKER_STR)
+//    @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     @ApiModelProperty(value = "课程讲师ID")
@@ -61,10 +66,12 @@ public class EduCourse implements Serializable {
     @ApiModelProperty(value = "视频状态 Draft未发布  Normal已发布")
     private String status;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "创建时间", example = "2019-01-01 8:00:00")
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtCreate;
 
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty(value = "更新时间", example = "2019-01-01 8:00:00")
+    @TableField(fill = FieldFill.INSERT)
     private Date gmtModified;
 
 

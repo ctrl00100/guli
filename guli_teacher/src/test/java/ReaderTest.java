@@ -18,7 +18,7 @@ public class ReaderTest {
     public void reader03() throws Exception{
 
         //1、获取一个文件（EXCL）路径，获取流
-        FileInputStream inputStream = new FileInputStream("D:/0401.xls");
+        FileInputStream inputStream = new FileInputStream("D:/0401-03.xls");
 
         //2、根据这个流创建一个WorkBook
         Workbook workbook = new HSSFWorkbook(inputStream);
@@ -30,7 +30,8 @@ public class ReaderTest {
         Cell cell1 = row.getCell(0);
         Cell cell2 = row.getCell(1);
         //6、根据列获取列中的数据
-        String value = cell1.getStringCellValue();
+//        String value = cell1.getStringCellValue();
+        double value = cell1.getNumericCellValue();
         double numericCellValue = cell2.getNumericCellValue();
         System.err.println(value + "----" + numericCellValue);
         //7、关闭流
