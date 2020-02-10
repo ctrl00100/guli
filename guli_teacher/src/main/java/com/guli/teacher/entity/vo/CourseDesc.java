@@ -10,6 +10,6 @@ public class CourseDesc {
 //    CourseDesc
     private EduCourse eduCourse;
 
-    private EduCourseDescription eduCourseDescription;
+    private EduCourseDescription courseDescription;
 
 }

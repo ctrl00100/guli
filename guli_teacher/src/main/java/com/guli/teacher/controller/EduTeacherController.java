@@ -38,7 +38,7 @@ public class EduTeacherController {
     private EduTeacherService eduTeacherService;
 
     @ApiOperation(value = "所有讲师列表")
-    @GetMapping
+    @GetMapping("list")
     public Result getTeacherList(){
 //        int a = 1 / 0;
         try {

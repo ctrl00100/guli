@@ -32,12 +32,19 @@ public class EduCourse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "课程ID")
-    @TableId(value = "id", type = IdType.ID_WORKER_STR)
 //    @TableId(value = "id", type = IdType.ID_WORKER_STR)
+    @TableId(value = "id", type = IdType.ID_WORKER_STR)
     private String id;
 
     @ApiModelProperty(value = "课程讲师ID")
     private String teacherId;
+
+
+    @ApiModelProperty(value = "课程专业一级分类ID")
+    private String subjectParentId;
+
+
+
 
     @ApiModelProperty(value = "课程专业ID")
     private String subjectId;
@@ -71,7 +78,7 @@ public class EduCourse implements Serializable {
     private Date gmtCreate;
 
     @ApiModelProperty(value = "更新时间", example = "2019-01-01 8:00:00")
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date gmtModified;
 
 

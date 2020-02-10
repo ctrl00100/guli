@@ -19,7 +19,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.guli.teacher.mapper")
+@MapperScan({"com.guli.teacher.mapper","com.guli.teacher.notteacher.mapper"})
+
 public class TeacherConfig {
 
 

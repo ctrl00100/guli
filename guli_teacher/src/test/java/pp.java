@@ -42,13 +42,13 @@ public class pp {
         dsc.setUrl("jdbc:mysql://localhost:3306/guli_edu");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+//        dsc.setPassword("root");
         dsc.setDbType(DbType.MYSQL);
         mpg.setDataSource(dsc);
 
         // 4、包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName("teacher"); //模块名
+        pc.setModuleName("notteacher"); //模块名
         pc.setParent("com.guli");
         pc.setController("controller");
         pc.setEntity("entity");
@@ -57,7 +57,7 @@ public class pp {
         mpg.setPackageInfo(pc);
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("edu_video");//表名称
+        strategy.setInclude("mydemo");//表名称
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
         strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
 
