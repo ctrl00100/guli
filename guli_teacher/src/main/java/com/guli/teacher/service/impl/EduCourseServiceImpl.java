@@ -7,6 +7,7 @@ import com.guli.teacher.entity.EduCourse;
 import com.guli.teacher.entity.EduCourseDescription;
 import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
+import com.guli.teacher.entity.vo.CoursePublishVo;
 import com.guli.teacher.mapper.EduCourseMapper;
 import com.guli.teacher.service.EduCourseDescriptionService;
 import com.guli.teacher.service.EduCourseService;
@@ -136,6 +137,22 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         // 删除基本信息
         int i = baseMapper.deleteById(id);
         return i == 1;
+    }
+
+
+    @Override
+    public CoursePublishVo getCoursePublishVoById(String id) {
+        CoursePublishVo vo = baseMapper.getCoursePublishVoById(id);
+        return vo;
+    }
+
+    @Override
+    public Boolean updateStatusById(String id) {
+        EduCourse course = new EduCourse();
+        course.setId(id);
+        course.setStatus("Normal");
+        int update = baseMapper.updateById(course);
+        return update > 0;
     }
 
 }

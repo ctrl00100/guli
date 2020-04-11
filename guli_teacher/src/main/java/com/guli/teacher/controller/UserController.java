@@ -24,10 +24,11 @@ import java.util.List;
  * @author guli
  * @since 2020-01-14
  */
+@CrossOrigin
 @Api(description = "User登陆")
 @RestController
 @RequestMapping("user")
-@CrossOrigin
+
 public class UserController {
 
 

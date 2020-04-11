@@ -6,6 +6,7 @@
         <module>guli_teacher</module>
         <module>guli_common</module>
         <module>guli_oss</module>
+        <module>guli_vod</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -89,6 +90,26 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <!-- maven默认加载的xml -->
+           <!-- <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>-->
+        </resources>
+
     </build>
 
 </project>

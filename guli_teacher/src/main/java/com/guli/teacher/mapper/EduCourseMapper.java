@@ -2,6 +2,7 @@ package com.guli.teacher.mapper;
 
 import com.guli.teacher.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.guli.teacher.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -11,6 +12,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author guli
  * @since 2020-01-20
  */
+//public interface EduCourseMapper extends BaseMapper<EduCourse> {
+//
+//}
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
+    CoursePublishVo getCoursePublishVoById(String id);
 }

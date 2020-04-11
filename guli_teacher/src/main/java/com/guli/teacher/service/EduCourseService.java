@@ -5,6 +5,7 @@ import com.guli.teacher.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
+import com.guli.teacher.entity.vo.CoursePublishVo;
 
 /**
  * <p>
@@ -37,4 +38,9 @@ public interface EduCourseService extends IService<EduCourse> {
     void getPageList(Page<EduCourse> objectPage, CourseQuery courseQuery);
 
     Boolean deleteById(String id);
+
+
+    CoursePublishVo getCoursePublishVoById(String id);
+
+    Boolean updateStatusById(String id);
 }

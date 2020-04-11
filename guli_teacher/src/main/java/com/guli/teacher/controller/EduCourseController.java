@@ -6,6 +6,7 @@ import com.guli.common.result.Result;
 import com.guli.teacher.entity.EduCourse;
 import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
+import com.guli.teacher.entity.vo.CoursePublishVo;
 import com.guli.teacher.service.EduCourseService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
 
-    @PostMapping("save")
+    @PostMapping("saveVo")
     @Transactional
     public Result saveCourse(@RequestBody CourseDesc courseDesc){ //接收课程和描述对象
 
@@ -98,6 +99,34 @@ public class EduCourseController {
             return Result.error();
         }
     }
+
+
+    /**
+     * 根据课程Id查询课程Vo对象
+     * @param id
+     * @return
+     */
+    @GetMapping("vo/{id}")
+    public Result getCoursePublishVoById(@PathVariable String id){
+        CoursePublishVo voursePublishVo = courseService.getCoursePublishVoById(id);
+        if(voursePublishVo != null){
+            return Result.ok().data("item",voursePublishVo);
+        } else {
+            return Result.error();
+        }
+    }
+
+//    @PutMapping("/status/{id}")
+    @GetMapping("/updateStatusById/{id}")
+    public Result updateByStatusById(@PathVariable String id){
+        Boolean flag = courseService.updateStatusById(id);
+        if(flag){
+            return Result.ok();
+        } else{
+            return Result.error();
+        }
+    }
+
 
 }
 
