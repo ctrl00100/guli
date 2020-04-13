@@ -9,9 +9,11 @@ import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
 import com.guli.teacher.entity.vo.CoursePublishVo;
 import com.guli.teacher.mapper.EduCourseMapper;
+import com.guli.teacher.service.EduChapterService;
 import com.guli.teacher.service.EduCourseDescriptionService;
 import com.guli.teacher.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.guli.teacher.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,13 +124,20 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         baseMapper.selectPage(objectPage,wrapper);
     }
 
+    @Autowired
+    private EduVideoService videoService;
+
+    @Autowired
+    private EduChapterService chapterService;
+
     @Override
     public Boolean deleteById(String id) {
 
         // TODO 删除课程相关的小节
-
+        //根据课程ID删除小节
+        videoService.removeVideoByCourseId(id);
         // TODO 删除课程相关的章节
-
+        chapterService.removeByCourseId(id);
         // 删除描述
         boolean b = eduCourseDescriptionService.removeById(id);
         if(!b){

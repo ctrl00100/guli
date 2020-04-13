@@ -53,6 +53,25 @@
 <!--            <artifactId>aliyun-sdk-vod-upload</artifactId>-->
 <!--            <version>1.4.6</version>-->
 <!--        </dependency>-->
+        <!--服务注册-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!--服务调用-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
     </dependencies>
 
     <repositories>

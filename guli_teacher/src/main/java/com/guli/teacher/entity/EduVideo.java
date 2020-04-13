@@ -54,6 +54,9 @@ public class EduVideo implements Serializable {
     @ApiModelProperty(value = "视频资源")
     private String videoSourceId;
 
+    @ApiModelProperty(value = "视频名称")
+    private String videoOriginalName;
+
     @ApiModelProperty(value = "视频时长（秒）")
     private Float duration;
 
