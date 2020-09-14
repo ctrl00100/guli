@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.guli.common.exception.EduException;
 import com.guli.teacher.entity.EduChapter;
 import com.guli.teacher.entity.EduVideo;
+import com.guli.teacher.entity.vo.ChapterDto;
 import com.guli.teacher.entity.vo.OneChapter;
 import com.guli.teacher.entity.vo.TwoVideo;
+import com.guli.teacher.entity.vo.VideoDto;
 import com.guli.teacher.mapper.EduChapterMapper;
 import com.guli.teacher.service.EduChapterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -122,4 +124,60 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         //3、删除章节
         return i == 1;
     }
+
+    @Override
+    public List<ChapterDto> getAllChapterVideo(String id) {
+        return null;
+    }
+
+/*    //查询课程里面的所有章节和小节数据，使用dto进行封装
+    @Override
+    public List<ChapterDto> getAllChapterVideo(String courseId) {
+        //1 查询课程里面所有章节
+        //根据课程id查询章节数据
+        QueryWrapper<EduChapter> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        List<EduChapter> eduChapterList = baseMapper.selectList(wrapper);
+
+        //2 查询课程里面所有的小节
+        //根据课程id查询课程里面所有的小节
+        QueryWrapper<EduVideo> wrapperVideo = new QueryWrapper<>();
+        wrapperVideo.eq("course_id",courseId);
+        List<EduVideo> eduVideoList = videoService.list(wrapperVideo);
+
+        //定义集合，用于存储最终封装的数据
+        List<ChapterDto> finalList = new ArrayList<>();
+
+        //封装章节
+        //把课程里面所有的章节集合遍历
+        for (int i = 0; i < eduChapterList.size(); i++) {
+            //得到每个章节
+            EduChapter eduChapter = eduChapterList.get(i);
+            //把eduChapter对象转换成功chapterDto对象
+            ChapterDto chapterDto = new ChapterDto();
+            BeanUtils.copyProperties(eduChapter,chapterDto);
+            //chapterDto放到list集合中
+            finalList.add(chapterDto);
+
+            //创建集合，用户存储小节数据
+            List<VideoDto> videoList = new ArrayList<>();
+
+            //遍历课程里面所有的小节
+            for (int m = 0; m < eduVideoList.size(); m++) {
+                //得到每个小节
+                EduVideo eduVideo = eduVideoList.get(m);
+                //判断小节里面chapterid  和 章节里面id是否一样
+                if(eduVideo.getChapterId().equals(eduChapter.getId())) {
+                    //把eduVideo对象转换videoDto对象
+                    VideoDto videoDto = new VideoDto();
+                    BeanUtils.copyProperties(eduVideo,videoDto);
+                    //放到list集合
+                    videoList.add(videoDto);
+                }
+            }
+            //把封装好的小节放到章节里面
+            chapterDto.setChildren(videoList);
+        }
+        return finalList;
+    }*/
 }

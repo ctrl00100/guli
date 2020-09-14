@@ -2,6 +2,7 @@ package com.guli.teacher.service;
 
 import com.guli.teacher.entity.EduChapter;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.guli.teacher.entity.vo.ChapterDto;
 import com.guli.teacher.entity.vo.OneChapter;
 
 import java.util.List;
@@ -47,4 +48,6 @@ public interface EduChapterService extends IService<EduChapter> {
      * @return
      */
     Boolean removeChapterById(String id);
+
+    List<ChapterDto> getAllChapterVideo(String id);
 }

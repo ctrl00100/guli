@@ -8,6 +8,7 @@ import com.guli.teacher.entity.EduCourseDescription;
 import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
 import com.guli.teacher.entity.vo.CoursePublishVo;
+import com.guli.teacher.entity.vo.CourseWebVo;
 import com.guli.teacher.mapper.EduCourseMapper;
 import com.guli.teacher.service.EduChapterService;
 import com.guli.teacher.service.EduCourseDescriptionService;
@@ -18,6 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -32,6 +37,11 @@ import org.springframework.util.StringUtils;
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+
+
+//    @Autowired
+//    private EduCourseDescriptionService eduCourseDescriptionService;
+
 
     @Override
     public String saveCourseDesc(CourseDesc courseDesc) {
@@ -163,5 +173,45 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         int update = baseMapper.updateById(course);
         return update > 0;
     }
+    //2 根据讲师id查询讲师所讲的课程
+    @Override
+    public List<EduCourse> getCourseListByTeacherId(String id) {
+        QueryWrapper<EduCourse> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id",id);
+        List<EduCourse> eduCourses = baseMapper.selectList(wrapper);
+        return eduCourses;
+    }
 
+    ////课程分页列表
+    @Override
+    public Map<String, Object> getFrontCourseList(Page<EduCourse> pageCourse) {
+        baseMapper.selectPage(pageCourse,null);
+
+        long current = pageCourse.getCurrent(); //当前页
+        long pages = pageCourse.getPages(); //总页数
+        long size = pageCourse.getSize(); //每页显示记录数
+        long total = pageCourse.getTotal(); //总记录数
+        List<EduCourse> records = pageCourse.getRecords(); //每页数据list集合
+        boolean hasPrevious = pageCourse.hasPrevious(); //上一页
+        boolean hasNext = pageCourse.hasNext(); //下一页
+
+        //封装map
+        Map<String,Object> map = new HashMap<>();
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+
+        return map;
+    }
+
+    //根据id查询课程基本信息
+    @Override
+    public CourseWebVo getCourseInfoFrontId(String id) {
+        CourseWebVo courseWebVo = baseMapper.getFrontCourseInfoId(id);
+        return courseWebVo;
+    }
 }

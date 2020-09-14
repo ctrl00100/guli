@@ -1,4 +1,4 @@
-package cn.eduxueyuan.educenter.config;
+package cn.eduxueyuan.edusta.config;
 
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan("cn.eduxueyuan.educenter.mapper")
+@MapperScan("cn.eduxueyuan.edusta.mapper")
 public class EduConfig {
 
     /**
@@ -24,8 +24,8 @@ public class EduConfig {
     /**
      * 分页插件
      */
-//    @Bean
-//    public PaginationInterceptor paginationInterceptor() {
-//        return new PaginationInterceptor();
-//    }
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
+    }
 }

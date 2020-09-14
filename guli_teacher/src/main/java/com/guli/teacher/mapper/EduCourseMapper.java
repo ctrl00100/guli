@@ -3,6 +3,7 @@ package com.guli.teacher.mapper;
 import com.guli.teacher.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.guli.teacher.entity.vo.CoursePublishVo;
+import com.guli.teacher.entity.vo.CourseWebVo;
 
 /**
  * <p>
@@ -18,4 +19,6 @@ import com.guli.teacher.entity.vo.CoursePublishVo;
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
 
     CoursePublishVo getCoursePublishVoById(String id);
+
+    CourseWebVo getFrontCourseInfoId(String id);
 }

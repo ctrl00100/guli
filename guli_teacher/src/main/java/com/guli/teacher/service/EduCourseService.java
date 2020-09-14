@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.guli.teacher.entity.query.CourseQuery;
 import com.guli.teacher.entity.vo.CourseDesc;
 import com.guli.teacher.entity.vo.CoursePublishVo;
+import com.guli.teacher.entity.vo.CourseWebVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -43,4 +47,12 @@ public interface EduCourseService extends IService<EduCourse> {
     CoursePublishVo getCoursePublishVoById(String id);
 
     Boolean updateStatusById(String id);
+
+
+    //根据讲师id查询讲师所讲课程
+    List<EduCourse> getCourseListByTeacherId(String id);
+
+    Map<String, Object> getFrontCourseList(Page<EduCourse> pageTeacher);
+
+    CourseWebVo getCourseInfoFrontId(String id);
 }

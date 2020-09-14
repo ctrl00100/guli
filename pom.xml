@@ -9,6 +9,7 @@
         <module>guli_vod</module>
         <module>guli_eureka</module>
         <module>edu_eduucenter</module>
+        <module>edu_edustatis</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

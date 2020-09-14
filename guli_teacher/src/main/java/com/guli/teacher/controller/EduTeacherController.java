@@ -143,6 +143,7 @@ public class EduTeacherController {
 
             return Result.ok().data("teacher",teacher);
         } catch (Exception e) {
+
             e.printStackTrace();
             return Result.error();
         }
